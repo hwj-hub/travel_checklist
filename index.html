@@ -92,11 +92,9 @@ body.ia-lock .wrap{pointer-events:none}
   text-decoration:underline;cursor:pointer}
 .ad-lab{display:block;text-align:center;font-size:9.5px;font-weight:700;letter-spacing:.14em;color:var(--muted);opacity:.7;margin:12px 0 -4px}
 body.no-ad .ad-slot,.ad-none{display:none !important}
-/* PC 옆 칸 — 미리보기 카드 바로 위 320×50 · 옆 칸 맨 아래(점검 결과 밑) 320×100 (좁은 화면에서는 둘 다 숨긴다) */
-@media (max-width:979px){#ad-side,#ad-mid-pc{display:none}}
-@media (min-width:980px){#ad-side{margin:14px auto 0}#ad-mid{display:none}#ad-mid-pc{margin:12px auto 0}}
-/* 본문 광고는 버튼·입력칸에서 넉넉히 떼어 놓는다 — 실수로 눌리는 자리는 금지 */
-#ad-mid{margin:18px auto}
+/* PC 옆 칸 — 미리보기 카드 바로 위 320×50 (좁은 화면에서는 숨긴다) */
+@media (max-width:979px){#ad-side{display:none}}
+@media (min-width:980px){#ad-side{margin:14px auto 0}}
 
 /* ── 하단 오버형 ── 콘텐츠를 가리지 않도록 본문 아래 여백을 같이 늘린다(애드핏: 콘텐츠를 덮는 배치 금지).
    입력 중(아래 바가 떠 있을 때)에는 띄우지 않는다 — 핵심 행동 중 광고 노출 금지 조항 */
@@ -619,14 +617,8 @@ footer a{color:inherit}
       <button type="button" id="doneGo">다른 브라우저로 열기</button></p>
     <div id="doneAd"><span class="ad-lab">광고</span><div class="ad-slot" id="ad-done"></div></div>
   </section>
-
-  <!-- 광고 자리 ② 320×100 · PC — 옆 칸 맨 아래. 휴대폰에서는 숨기고 아래 #ad-mid 자리를 씁니다 -->
-  <div class="ad-slot" id="ad-mid-pc"></div>
 </aside>
 </div>
-
-<!-- 광고 자리 ② 320×100 · 휴대폰 — 체크리스트·할 일·판정기가 다 끝난 자리 -->
-<div class="ad-slot" id="ad-mid"></div>
 
 <section class="card">
   <h2><span>비행기 짐 규칙 — 2026년</span></h2>
@@ -2260,9 +2252,9 @@ function iaCopied() {
 
 /* ════════════════════════════════════════════════════════════
    광고 (카카오 애드핏) — 자리는 여기 한 곳에서만 만든다
-   · 한 화면 4곳까지 (애드핏 운영정책: 한 페이지 4개 초과 게재 금지)
-     모바일 ① 맨 위 320×50 ② 본문 320×100 ③ 저장 완료 카드 300×250 ④ 하단 오버형 320×50
-     PC     ① 맨 위 320×50 ② 옆 칸 맨 위 320×50 ③ 옆 칸 맨 아래 320×100 ④ 저장 완료 카드 300×250
+   · 한 화면 3곳 (애드핏 운영정책: 한 페이지 4개 초과 게재 금지 · 본문 320×100 은 뺐다)
+     모바일 ① 맨 위 320×50 ② 저장 완료 카드 300×250 ③ 하단 오버형 320×50
+     PC     ① 맨 위 320×50 ② 옆 칸 맨 위 320×50 ③ 저장 완료 카드 300×250
    · ins 는 자리마다 미리 만들어 두고 ba.min.js 는 맨 끝에 한 번만 부른다 —
      애드핏 로더는 자기가 뜰 때 있는 ins 만 읽어서, 뒤늦게 넣은 ins 는 빈 채로 남는다
    · 입력·체크리스트·할 일·판정기·저장 카드가 화면에 있는 동안에는 오버형을 내려 둔다(핵심 행동 중 광고 노출 금지 · 단추 옆 오클릭 방지)
@@ -2273,11 +2265,10 @@ function iaCopied() {
      같은 ID 를 한 화면에 함께 뜨는 두 자리에 쓰면 두 번 노출되어 정책 위반이다. */
 const AD = {
   /* 애드핏 배너 크기는 160×600 · 250×250 · 300×250 · 320×100 · 320×50 · 728×90 뿐인데,
-     이 도구는 그중 휴대폰에서도 들어가는 320×50 · 320×100 · 300×250 만 쓴다 */
+     이 도구는 그중 휴대폰에서도 들어가는 320×50 · 300×250 만 쓴다 */
   units: {
     top:     { id: 'DAN-Y4nUneFLEbA8lfly', w: 320, h: 50 },   /* 맨 위 · 모바일과 PC 크기가 같아 하나로 겸한다 */
     side_pc: { id: 'DAN-Y18vy9JqBFPx72J6', w: 320, h: 50 },   /* PC 옆 칸 맨 위(결과 카드 위) */
-    mid:     { id: 'DAN-OeeT7QuB8tqKI6AL', w: 320, h: 100 },  /* PC 옆 칸 맨 아래 / 휴대폰 본문 — 한 곳에만 뜨니 하나로 쓴다 */
     done:    { id: 'DAN-plrjxrWbugbxzWm6', w: 300, h: 250 },  /* 저장 완료 카드 */
     anchor:  { id: 'DAN-HNKrYfxGPuOxlSeA', w: 320, h: 50 }    /* 모바일 하단 오버형 */
   },
@@ -2292,8 +2283,6 @@ const AD = {
     if (this.off) { document.body.classList.add('no-ad'); return; }  /* 빈 자리가 남지 않게 접는다 */
     this.put($('ad-top'), 'top');
     if (this.pc) this.put($('ad-side'), 'side_pc');
-    /* 320×100 은 PC 면 옆 칸 맨 아래, 휴대폰이면 본문 — 한 곳에만 넣어 단위 하나로 겸한다 */
-    this.put(this.pc ? $('ad-mid-pc') : $('ad-mid'), 'mid');
     /* 숨어 있는 자리(하단 오버형·저장 완료 카드)는 화면에 나온 다음에 부른다 —
        안 보이는 동안 부르면 보는 사람 없이 노출만 잡히고, 애드핏도 「노출수를 인위적으로 늘리는 수단」을 금지한다 */
     this.load();
